@@ -8,7 +8,7 @@
   "theme_color": "#87ceeb",
   "icons": [
     {
-      "src": "/assets/svg/mascot.svg",
+      "src": "https://babichev.net/assets/svg/mascot.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"

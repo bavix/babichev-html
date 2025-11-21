@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
   {{ partial "seo.html" . }}
-  <link rel="icon" type="image/svg+xml" href="{{ "assets/svg/mascot.svg" | relURL }}">
-  <link rel="apple-touch-icon" href="{{ "assets/svg/mascot.svg" | relURL }}">
-  <link rel="manifest" href="{{ "assets/mobile-icons/manifest.json" | relURL }}">
-  <link rel="stylesheet" href="{{ "css/main.min.css" | relURL }}">
+  <link rel="icon" type="image/svg+xml" href="{{ "/assets/svg/mascot.svg" | absURL }}">
+  <link rel="apple-touch-icon" href="{{ "/assets/svg/mascot.svg" | absURL }}">
+  <link rel="manifest" href="{{ "/assets/mobile-icons/manifest.json" | absURL }}">
+  <link rel="stylesheet" href="{{ "/css/main.min.css" | absURL }}">
   {{ partial "structured-data.html" . }}
 </head>
 <body class="bg-pixel-bg text-pixel-text font-pixel">

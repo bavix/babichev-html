@@ -65,7 +65,7 @@
   {{- if .Params.image -}}
   "image": "{{ .Params.image | absURL }}",
   {{- else -}}
-  "image": "{{ printf "%s/assets/svg/mascot.svg" .Site.BaseURL }}",
+  "image": "{{ printf "%s/assets/svg/mascot.svg" .Site.BaseURL | absURL }}",
   {{- end -}}
   {{- if .Params.tags -}}
   "keywords": "{{ delimit .Params.tags ", " }}",
@@ -142,4 +142,6 @@
 }
 </script>
 {{- end -}}
+
+
 
