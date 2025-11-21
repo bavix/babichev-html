@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>500 Internal Server Error - Maxim Babichev - Software Developer</title>
+  <meta name="description" content="System Error">
+  <link rel="icon" type="image/svg+xml" href="/assets/svg/mascot.svg">
+  <link rel="stylesheet" href="/css/main.min.css">
+</head>
+<body class="bg-pixel-bg text-pixel-text font-pixel">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full text-center space-y-8">
+      <div class="space-y-6">
+        <div class="text-9xl sm:text-[12rem] font-bold text-pixel-accent pixel-text leading-none" style="text-shadow: 0 0 40px rgba(234, 179, 8, 0.4);">
+          500
+        </div>
+        
+        <div class="space-y-3">
+          <h1 class="text-2xl sm:text-3xl font-bold pixel-text">SYSTEM ERROR</h1>
+          <p class="text-sm sm:text-base text-pixel-text-muted leading-relaxed max-w-lg mx-auto">
+            Oops! The server had a meltdown. Someone forgot to feed the hamsters running the database.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <div class="w-40 h-40 sm:w-48 sm:h-48">
+          <img src="/assets/svg/error-500-sega.svg" alt="Broken System" class="w-full h-full opacity-80" style="image-rendering: pixelated;" />
+        </div>
+      </div>
+
+      <div class="text-xs pixel-text text-pixel-text-muted space-y-1 max-w-md mx-auto">
+        <div>&gt; STATUS: <span class="text-pixel-accent">HTTP 500 INTERNAL SERVER ERROR</span></div>
+        <div>&gt; TIME: <span id="error-time"></span></div>
+        <div>&gt; ERROR: <span class="text-pixel-accent">Unexpected server state</span></div>
+      </div>
+
+      <div class="pt-4">
+        <a href="https://babichev.net" class="text-pixel-border-light hover:text-pixel-text text-sm pixel-text underline transition-colors">
+          &lt; Return to home
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('error-time').textContent = new Date().toLocaleString();
+  </script>
+</body>
+</html>

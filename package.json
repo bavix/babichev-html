@@ -1,0 +1,18 @@
+{
+  "name": "babichev-net",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build:css && hugo server",
+    "build": "npm run clean && npm run build:css && hugo --minify",
+    "build:css": "tailwindcss -i ./static/css/main.css -o ./static/css/main.min.css --minify",
+    "clean": "rm -rf public/* public/.* 2>/dev/null || true",
+    "serve": "hugo server"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6"
+  }
+}

@@ -1,0 +1,90 @@
+baseURL = 'https://babichev.net'
+languageCode = 'ru'
+title = 'Maxim Babichev - Software Developer'
+enableRobotsTXT = true
+
+[params]
+  author = "Maxim Babichev"
+  description = "Software Developer | Go | PHP | Rust | Backend Development | Open Source Projects"
+  login = "REZ1DENT3"
+  firstName = "Максим"
+  lastName = "Бабичев"
+  middleName = "Анатольевич"
+  profession = "Software Developer"
+  githubUrl = "https://github.com/rez1dent3"
+  email = "info@babichev.net"
+  phone = "+7 (918) 382-29-70"
+  image = "https://babichev.net/assets/svg/mascot.svg"
+  twitter = "@rez1dent3"
+  
+  [[params.socialLinks]]
+    name = "GITHUB"
+    url = "https://github.com/rez1dent3"
+  
+  [[params.socialLinks]]
+    name = "TELEGRAM"
+    url = "https://t.me/mbabichev"
+  
+  [[params.socialLinks]]
+    name = "TWITTER"
+    url = "https://twitter.com/rez1dent3"
+  
+  [[params.socialLinks]]
+    name = "HABR"
+    url = "https://habr.com/users/REZ1DENT3/"
+  
+  [[params.socialLinks]]
+    name = "FACEBOOK"
+    url = "https://www.facebook.com/rez1dent3"
+  
+  [[params.socialLinks]]
+    name = "INSTAGRAM"
+    url = "https://instagram.com/m.babichev"
+  
+  [[params.services]]
+    name = "EXCALIDRAW"
+    url = "https://excalidraw.babichev.net"
+    description = "Online whiteboard"
+
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "ABOUT"
+    url = "/"
+    weight = 1
+  
+  [[menu.main]]
+    identifier = "projects"
+    name = "PROJECTS"
+    url = "/projects/"
+    weight = 2
+  
+  [[menu.main]]
+    identifier = "articles"
+    name = "ARTICLES"
+    url = "/articles/"
+    weight = 3
+
+[taxonomies]
+  tag = "tags"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "monokai"
+
+[sitemap]
+  changefreq = "monthly"
+  priority = 0.5
+  filename = "sitemap.xml"
+
+[services]
+  [services.rss]
+    limit = 20
+
+[outputs]
+  home = ["HTML", "RSS"]
+  page = ["HTML"]
+

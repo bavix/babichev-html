@@ -1,0 +1,19 @@
+<div class="pixel-box p-4">
+  <h2 class="text-base font-bold pixel-text mb-3">SERVICES</h2>
+  
+  <div class="space-y-2">
+    {{ range .Site.Params.services }}
+      <div class="border-l-2 border-pixel-border pl-3">
+        <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" class="block hover:text-pixel-border-light transition-colors">
+          <div class="text-pixel-text font-bold text-sm mb-1 pixel-text">
+            &gt; {{ .name }}
+          </div>
+          <div class="text-pixel-text-muted text-xs">
+            {{ .description }}
+          </div>
+        </a>
+      </div>
+    {{ end }}
+  </div>
+</div>
+

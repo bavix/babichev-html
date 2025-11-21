@@ -1,0 +1,12 @@
+<div class="pixel-box p-4">
+  <h2 class="text-base font-bold pixel-text mb-3">LINKS</h2>
+  
+  <div class="grid grid-cols-2 gap-2">
+    {{ range .Site.Params.socialLinks }}
+      <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs text-center block">
+        {{ .name }}
+      </a>
+    {{ end }}
+  </div>
+</div>
+

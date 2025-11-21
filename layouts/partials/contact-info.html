@@ -1,0 +1,15 @@
+<div class="pixel-box p-4">
+  <h2 class="text-base font-bold pixel-text mb-3">CONTACTS</h2>
+  
+  <div class="space-y-2 text-sm">
+    <a href="mailto:{{ .Site.Params.email }}" class="block hover:text-pixel-border-light transition-colors">
+      <div class="text-pixel-text-muted text-xs pixel-text">&gt; EMAIL:</div>
+      <div class="text-pixel-text font-bold text-sm break-all">{{ .Site.Params.email }}</div>
+    </a>
+    <a href="tel:{{ .Site.Params.phone | replaceRE "[^0-9+]" "" }}" class="block hover:text-pixel-border-light transition-colors">
+      <div class="text-pixel-text-muted text-xs pixel-text">&gt; PHONE:</div>
+      <div class="text-pixel-text font-bold text-sm break-all">{{ .Site.Params.phone }}</div>
+    </a>
+  </div>
+</div>
+

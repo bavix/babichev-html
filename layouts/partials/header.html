@@ -1,0 +1,35 @@
+<header class="mb-6 pb-4 border-b-2 border-pixel-border">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    <div class="flex items-center gap-4">
+      <a href="{{ "/" | relURL }}" class="flex items-center gap-3" aria-label="Главная страница">
+        <img 
+          src="{{ "assets/svg/mascot.svg" | relURL }}" 
+          alt="Go Gopher - талисман сайта Maxim Babichev" 
+          class="w-12 h-12"
+          style="image-rendering: pixelated;"
+          width="48"
+          height="48"
+        />
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold pixel-text">
+            MAXIM BABICHEV
+          </h1>
+          <div class="text-pixel-text-muted text-xs pixel-text mt-1">
+            &gt; SOFTWARE DEVELOPER | GO | PHP | RUST
+          </div>
+        </div>
+      </a>
+    </div>
+    
+    <nav class="flex items-center gap-2 flex-wrap" aria-label="Основная навигация">
+      {{ range .Site.Menus.main }}
+        <a href="{{ .URL | relURL }}" aria-label="{{ .Name }}">
+          <button class="pixel-button text-xs {{ if eq $.RelPermalink .URL }}active{{ end }}">
+            {{ .Name }}
+          </button>
+        </a>
+      {{ end }}
+    </nav>
+  </div>
+</header>
+

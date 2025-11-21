@@ -1,0 +1,34 @@
+{{ define "main" }}
+<div class="space-y-6">
+  <div class="border-b-2 border-pixel-border pb-3">
+    <h1 class="text-2xl sm:text-3xl font-bold pixel-text mb-2">{{ .Title | upper }}</h1>
+    {{ if .Description }}
+      <p class="text-pixel-text-muted text-xs pixel-text">
+        &gt; {{ .Description }}
+      </p>
+    {{ end }}
+  </div>
+
+  {{ if .Data.Terms }}
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      {{ range .Data.Terms.ByCount }}
+        <a href="{{ .Page.Permalink }}" class="pixel-box p-4 hover:border-pixel-border-light transition-colors block">
+          <div class="text-sm font-bold pixel-text mb-1">
+            {{ .Page.Title | upper }}
+          </div>
+          <div class="text-xs text-pixel-text-muted">
+            &gt; {{ .Count }} {{ if eq .Count 1 }}item{{ else }}items{{ end }}
+          </div>
+        </a>
+      {{ end }}
+    </div>
+  {{ else }}
+    <div class="pixel-box p-4">
+      <div class="text-pixel-text-muted text-xs pixel-text">
+        &gt; NO TAGS FOUND
+      </div>
+    </div>
+  {{ end }}
+</div>
+{{ end }}
+
