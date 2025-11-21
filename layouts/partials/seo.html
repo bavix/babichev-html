@@ -8,7 +8,7 @@
     {{- $description = .Site.Params.description -}}
   {{- end -}}
 {{- end -}}
-{{- $image := .Site.Params.image | default (printf "%s/assets/svg/mascot.svg" .Site.BaseURL) -}}
+{{- $image := .Site.Params.image | default (printf "%s/assets/svg/mascot.svg" .Site.BaseURL) | absURL -}}
 {{- if .Params.image -}}
   {{- $image = .Params.image | absURL -}}
 {{- end -}}
