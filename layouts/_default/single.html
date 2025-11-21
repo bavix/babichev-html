@@ -1,0 +1,72 @@
+{{ define "main" }}
+<div class="space-y-4">
+  {{ if eq .Section "projects" }}
+    <a href="{{ "projects/" | relURL }}">
+      <button class="pixel-button text-xs mb-4">&lt; BACK TO PROJECTS</button>
+    </a>
+  {{ else if eq .Section "articles" }}
+    <a href="{{ "articles/" | relURL }}">
+      <button class="pixel-button text-xs mb-4">&lt; BACK TO ARTICLES</button>
+    </a>
+  {{ end }}
+
+  <article class="pixel-box p-4 sm:p-6" itemscope itemtype="https://schema.org/{{ if eq .Section "articles" }}Article{{ else }}SoftwareApplication{{ end }}">
+      <h1 class="text-2xl font-bold pixel-text mb-4" itemprop="headline">
+        {{ .Title | upper }}
+      </h1>
+
+      <div class="mb-6 space-y-1 text-xs pixel-text text-pixel-text-muted">
+        {{ if .Date }}
+          <time datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}" itemprop="datePublished">
+            <div>&gt; DATE: {{ .Date.Format "02.01.2006" }}</div>
+          </time>
+        {{ end }}
+        {{ if .Lastmod }}
+          <time datetime="{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}" itemprop="dateModified" class="hidden"></time>
+        {{ end }}
+        {{ if .Params.author }}
+          <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <span itemprop="name" class="hidden">{{ .Params.author }}</span>
+            <div>&gt; AUTHOR: {{ .Params.author }}</div>
+          </div>
+        {{ end }}
+      </div>
+
+      {{ if eq .Section "projects" }}
+        {{ if .Params.links }}
+          <div class="flex flex-wrap gap-2 mb-6">
+            {{ if .Params.links.github }}
+              <a href="{{ .Params.links.github }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs">GITHUB</a>
+            {{ end }}
+            {{ if .Params.links.docs }}
+              <a href="{{ .Params.links.docs }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs">DOCS</a>
+            {{ end }}
+            {{ if .Params.links.service }}
+              <a href="{{ .Params.links.service }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs">SERVICE</a>
+            {{ end }}
+            {{ if .Params.links.debugger }}
+              <a href="{{ .Params.links.debugger }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs">DEBUGGER</a>
+            {{ end }}
+          </div>
+        {{ end }}
+      {{ end }}
+
+      {{ if .Params.tags }}
+        <div class="mb-6">
+          <div class="text-xs text-pixel-text-muted pixel-text mb-2">&gt; TAGS:</div>
+          <div class="flex flex-wrap gap-2">
+            {{ range .Params.tags }}
+              <a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="pixel-button text-xs">
+                {{ . | upper }}
+              </a>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      <div class="prose prose-invert max-w-4xl mx-auto" itemprop="{{ if eq .Section "articles" }}articleBody{{ else }}description{{ end }}">
+        {{ .Content }}
+      </div>
+    </article>
+</div>
+{{ end }}

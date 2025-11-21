@@ -1,0 +1,143 @@
+{{ define "main" }}
+<div class="space-y-6">
+  <div class="border-b-2 border-pixel-border pb-3">
+    <h1 class="text-2xl sm:text-3xl font-bold pixel-text mb-2">{{ .Title | upper }}</h1>
+    {{ if .Description }}
+      <p class="text-pixel-text-muted text-xs pixel-text">
+        &gt; {{ .Description }}
+      </p>
+    {{ end }}
+  </div>
+
+  {{ if eq .Kind "section" }}
+    {{ if eq .Section "projects" }}
+      {{ if .Pages }}
+        <div class="space-y-4" itemscope itemtype="https://schema.org/ItemList">
+          {{ range $index, $page := .Pages }}
+            <article class="pixel-box p-4 sm:p-5 hover:border-pixel-border-light transition-colors" itemprop="itemListElement" itemscope itemtype="https://schema.org/SoftwareApplication">
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                  <a href="{{ .RelPermalink }}" class="block mb-3" itemprop="url">
+                    <h2 class="text-lg sm:text-xl font-bold pixel-text mb-3 break-words hover:text-pixel-border-light transition-colors" itemprop="name">
+                      {{ .Title | upper }}
+                    </h2>
+                  </a>
+                  {{ if .Params.excerpt }}
+                    <p class="text-pixel-text-muted text-sm leading-relaxed mb-4" itemprop="description">
+                      &gt; {{ .Params.excerpt }}
+                    </p>
+                  {{ end }}
+                  {{ if .Params.tags }}
+                    <div class="flex flex-wrap gap-2 mb-3">
+                      {{ range .Params.tags }}
+                        <a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="text-xs text-pixel-text-muted hover:text-pixel-border-light transition-colors">
+                          #{{ . | upper }}
+                        </a>
+                      {{ end }}
+                    </div>
+                  {{ end }}
+                  {{ if .Date }}
+                    <time datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}" itemprop="datePublished" class="hidden">{{ .Date.Format "2006-01-02T15:04:05-07:00" }}</time>
+                  {{ end }}
+                  
+                  {{ if .Params.links }}
+                    <div class="flex flex-wrap gap-2">
+                      {{ if .Params.links.github }}
+                        <a href="{{ .Params.links.github }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs" aria-label="GitHub репозиторий {{ .Title }}">GITHUB</a>
+                      {{ end }}
+                      {{ if .Params.links.docs }}
+                        <a href="{{ .Params.links.docs }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs" aria-label="Документация {{ .Title }}">DOCS</a>
+                      {{ end }}
+                      {{ if .Params.links.service }}
+                        <a href="{{ .Params.links.service }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs" aria-label="Сервис {{ .Title }}">SERVICE</a>
+                      {{ end }}
+                      {{ if .Params.links.debugger }}
+                        <a href="{{ .Params.links.debugger }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs" aria-label="Отладчик {{ .Title }}">DEBUGGER</a>
+                      {{ end }}
+                    </div>
+                  {{ end }}
+                </div>
+                
+                <div class="flex flex-col items-end gap-2 sm:flex-shrink-0">
+                  {{ if .Date }}
+                    <div class="text-xs text-pixel-text-muted pixel-text whitespace-nowrap">
+                      &gt; {{ .Date.Format "02.01.2006" }}
+                    </div>
+                  {{ end }}
+                  <a href="{{ .RelPermalink }}" class="pixel-button text-xs" aria-label="Подробнее о {{ .Title }}">
+                    VIEW DETAILS
+                  </a>
+                </div>
+              </div>
+            </article>
+          {{ end }}
+        </div>
+      {{ else }}
+        <div class="pixel-box p-4">
+          <div class="text-pixel-text-muted text-xs pixel-text">
+            &gt; NO PROJECTS FOUND
+          </div>
+        </div>
+      {{ end }}
+    {{ else if eq .Section "articles" }}
+      {{ if .Pages }}
+        <div class="space-y-4" itemscope itemtype="https://schema.org/ItemList">
+          {{ range $index, $page := .Pages }}
+            <article class="pixel-box p-4 sm:p-5 hover:border-pixel-border-light transition-colors" itemprop="itemListElement" itemscope itemtype="https://schema.org/Article">
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                  <a href="{{ .RelPermalink }}" class="block mb-3" itemprop="url">
+                    <h2 class="text-lg sm:text-xl font-bold pixel-text mb-3 break-words hover:text-pixel-border-light transition-colors" itemprop="headline">
+                      {{ .Title | upper }}
+                    </h2>
+                  </a>
+                  {{ if .Params.excerpt }}
+                    <p class="text-pixel-text-muted text-sm leading-relaxed mb-4" itemprop="description">
+                      &gt; {{ .Params.excerpt }}
+                    </p>
+                  {{ end }}
+                  {{ if .Params.tags }}
+                    <div class="flex flex-wrap gap-2 mb-3">
+                      {{ range .Params.tags }}
+                        <a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="text-xs text-pixel-text-muted hover:text-pixel-border-light transition-colors">
+                          #{{ . | upper }}
+                        </a>
+                      {{ end }}
+                    </div>
+                  {{ end }}
+                  {{ if .Date }}
+                    <time datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}" itemprop="datePublished" class="hidden">{{ .Date.Format "2006-01-02T15:04:05-07:00" }}</time>
+                  {{ end }}
+                  {{ if .Params.author }}
+                    <span itemprop="author" itemscope itemtype="https://schema.org/Person" class="hidden">
+                      <span itemprop="name">{{ .Params.author }}</span>
+                    </span>
+                  {{ end }}
+                </div>
+                
+                <div class="flex flex-col items-end gap-2 sm:flex-shrink-0">
+                  {{ if .Date }}
+                    <div class="text-xs text-pixel-text-muted pixel-text whitespace-nowrap">
+                      &gt; {{ .Date.Format "02.01.2006" }}
+                    </div>
+                  {{ end }}
+                  <a href="{{ .RelPermalink }}" class="pixel-button text-xs" aria-label="Читать статью {{ .Title }}">
+                    READ MORE
+                  </a>
+                </div>
+              </div>
+            </article>
+          {{ end }}
+        </div>
+      {{ else }}
+        <div class="pixel-box p-4">
+          <div class="text-pixel-text-muted text-xs pixel-text">
+            &gt; NO ARTICLES FOUND
+          </div>
+        </div>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+</div>
+{{ end }}
+

@@ -1,0 +1,70 @@
+{{ define "main" }}
+<div class="space-y-6">
+  <div class="border-b-2 border-pixel-border pb-3">
+    <h1 class="text-2xl sm:text-3xl font-bold pixel-text mb-2">
+      TAG: {{ .Title | upper }}
+    </h1>
+    <div class="text-pixel-text-muted text-xs pixel-text">
+      &gt; {{ len .Pages }} {{ if eq (len .Pages) 1 }}item{{ else }}items{{ end }}
+    </div>
+  </div>
+
+  {{ if .Pages }}
+    <div class="space-y-4">
+      {{ range .Pages }}
+        <article class="pixel-box p-4 sm:p-5 hover:border-pixel-border-light transition-colors">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <a href="{{ .RelPermalink }}" class="block mb-3">
+                <h2 class="text-lg sm:text-xl font-bold pixel-text mb-3 break-words hover:text-pixel-border-light transition-colors">
+                  {{ .Title | upper }}
+                </h2>
+              </a>
+              {{ if .Params.excerpt }}
+                <p class="text-pixel-text-muted text-sm leading-relaxed mb-3">
+                  &gt; {{ .Params.excerpt }}
+                </p>
+              {{ end }}
+              {{ if .Date }}
+                <div class="text-xs text-pixel-text-muted pixel-text mb-2">
+                  &gt; DATE: {{ .Date.Format "02.01.2006" }}
+                </div>
+              {{ end }}
+              {{ if eq .Section "projects" }}
+                {{ if .Params.links }}
+                  <div class="flex flex-wrap gap-2 mt-3">
+                    {{ if .Params.links.github }}
+                      <a href="{{ .Params.links.github }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs">GITHUB</a>
+                    {{ end }}
+                    {{ if .Params.links.docs }}
+                      <a href="{{ .Params.links.docs }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs">DOCS</a>
+                    {{ end }}
+                  </div>
+                {{ end }}
+              {{ end }}
+            </div>
+            <div class="flex-shrink-0">
+              <a href="{{ .RelPermalink }}" class="pixel-button text-xs">
+                {{ if eq .Section "articles" }}READ MORE{{ else }}VIEW DETAILS{{ end }}
+              </a>
+            </div>
+          </div>
+        </article>
+      {{ end }}
+    </div>
+  {{ else }}
+    <div class="pixel-box p-4">
+      <div class="text-pixel-text-muted text-xs pixel-text">
+        &gt; NO ITEMS FOUND FOR THIS TAG
+      </div>
+    </div>
+  {{ end }}
+
+  <div class="pt-4 border-t border-pixel-border">
+    <a href="{{ "/tags/" | relURL }}" class="pixel-button text-xs">
+      &lt; BACK TO ALL TAGS
+    </a>
+  </div>
+</div>
+{{ end }}
+

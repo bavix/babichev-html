@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+  {{ partial "seo.html" . }}
+  <link rel="icon" type="image/svg+xml" href="{{ "assets/svg/mascot.svg" | relURL }}">
+  <link rel="apple-touch-icon" href="{{ "assets/svg/mascot.svg" | relURL }}">
+  <link rel="manifest" href="{{ "assets/mobile-icons/manifest.json" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/main.min.css" | relURL }}">
+  {{ partial "structured-data.html" . }}
+</head>
+<body class="bg-pixel-bg text-pixel-text font-pixel">
+  <div class="container mx-auto px-4 py-4 max-w-5xl">
+    {{ partial "header.html" . }}
+    
+    <main class="mt-6">
+      {{ block "main" . }}{{ end }}
+    </main>
+    
+    {{ partial "footer.html" . }}
+  </div>
+</body>
+</html>
+

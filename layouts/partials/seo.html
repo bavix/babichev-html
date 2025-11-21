@@ -1,0 +1,71 @@
+{{- $title := .Title -}}
+{{- $description := .Description -}}
+{{- if .IsHome -}}
+  {{- $title = .Site.Title -}}
+  {{- $description = .Site.Params.description -}}
+{{- else -}}
+  {{- if not $description -}}
+    {{- $description = .Site.Params.description -}}
+  {{- end -}}
+{{- end -}}
+{{- $image := .Site.Params.image | default (printf "%s/assets/svg/mascot.svg" .Site.BaseURL) -}}
+{{- if .Params.image -}}
+  {{- $image = .Params.image | absURL -}}
+{{- end -}}
+{{- $url := .Permalink | absURL -}}
+{{- $siteName := .Site.Title -}}
+{{- $author := .Params.author | default .Site.Params.author -}}
+
+<meta name="description" content="{{ $description }}">
+<meta name="keywords" content="{{ if .Params.keywords }}{{ delimit .Params.keywords ", " }}{{ else }}Go, PHP, Rust, Backend Development, Software Development, Open Source, gRPC, Mock Server, Laravel, Testing{{ end }}">
+<meta name="author" content="{{ $author }}">
+{{- if .Params.robots -}}
+<meta name="robots" content="{{ .Params.robots }}">
+{{- else -}}
+<meta name="robots" content="index, follow">
+{{- end -}}
+<link rel="canonical" href="{{ $url }}">
+
+{{- if .IsPage -}}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">
+{{- if .Lastmod -}}
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}">
+{{- end -}}
+{{- if .Params.author -}}
+<meta property="article:author" content="{{ .Params.author }}">
+{{- end -}}
+{{- if .Params.tags -}}
+  {{- range .Params.tags -}}
+<meta property="article:tag" content="{{ . }}">
+  {{- end -}}
+{{- end -}}
+{{- if eq .Section "articles" -}}
+<meta property="article:section" content="Articles">
+{{- else if eq .Section "projects" -}}
+<meta property="article:section" content="Projects">
+{{- end -}}
+{{- end -}}
+
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ $url }}">
+<meta property="og:site_name" content="{{ $siteName }}">
+<meta property="og:image" content="{{ $image }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="{{ .Site.LanguageCode | default "ru_RU" }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ $image }}">
+{{- if .Site.Params.twitter -}}
+<meta name="twitter:site" content="{{ .Site.Params.twitter }}">
+<meta name="twitter:creator" content="{{ .Site.Params.twitter }}">
+{{- end -}}
+
+{{- with .OutputFormats.Get "rss" -}}
+  {{- printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML -}}
+{{- end -}}
+

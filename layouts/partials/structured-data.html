@@ -1,0 +1,145 @@
+{{- if .IsHome -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ .Site.Params.firstName }} {{ .Site.Params.lastName }}",
+  "alternateName": "{{ .Site.Params.login }}",
+  "jobTitle": "{{ .Site.Params.profession }}",
+  "url": "{{ .Site.BaseURL }}",
+  "sameAs": [
+    {{- range $index, $link := .Site.Params.socialLinks -}}
+      {{- if $index }},{{ end -}}
+      "{{ $link.url }}"
+    {{- end -}}
+  ],
+  "email": "{{ .Site.Params.email }}",
+  "telephone": "{{ .Site.Params.phone }}",
+  "description": "{{ .Site.Params.description }}"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ .Site.Title }}",
+  "url": "{{ .Site.BaseURL }}",
+  "description": "{{ .Site.Params.description }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ .Site.Params.firstName }} {{ .Site.Params.lastName }}"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ .Site.BaseURL }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{{- else if eq .Section "articles" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ .Title }}",
+  "description": "{{ .Description | default .Site.Params.description }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ .Params.author | default .Site.Params.author }}",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ .Site.Params.firstName }} {{ .Site.Params.lastName }}",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05-07:00" }}",
+  {{- if .Lastmod -}}
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}",
+  {{- end -}}
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink }}"
+  },
+  "url": "{{ .Permalink }}",
+  {{- if .Params.image -}}
+  "image": "{{ .Params.image | absURL }}",
+  {{- else -}}
+  "image": "{{ printf "%s/assets/svg/mascot.svg" .Site.BaseURL }}",
+  {{- end -}}
+  {{- if .Params.tags -}}
+  "keywords": "{{ delimit .Params.tags ", " }}",
+  {{- end -}}
+  "inLanguage": "{{ .Site.LanguageCode | default "ru" }}"
+}
+</script>
+{{- else if eq .Section "projects" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ .Title }}",
+  "description": "{{ .Description | default .Params.excerpt | default .Site.Params.description }}",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "{{ .Site.Params.firstName }} {{ .Site.Params.lastName }}",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  {{- if .Params.links.github -}}
+  "codeRepository": "{{ .Params.links.github }}",
+  {{- end -}}
+  {{- if .Params.links.docs -}}
+  "documentation": "{{ .Params.links.docs }}",
+  {{- end -}}
+  {{- if .Params.links.service -}}
+  "url": "{{ .Params.links.service }}",
+  {{- end -}}
+  "url": "{{ .Permalink }}",
+  {{- if .Params.image -}}
+  "screenshot": "{{ .Params.image | absURL }}",
+  {{- end -}}
+  {{- if .Params.tags -}}
+  "keywords": "{{ delimit .Params.tags ", " }}",
+  {{- end -}}
+  "inLanguage": "{{ .Site.LanguageCode | default "ru" }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05-07:00" }}"
+}
+</script>
+{{- end -}}
+{{- if eq .Kind "section" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ .Title }}",
+  "description": "{{ .Description | default .Site.Params.description }}",
+  "url": "{{ .Permalink }}",
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ len .Pages }},
+    "itemListElement": [
+      {{- range $index, $page := .Pages -}}
+        {{- if $index }},{{ end -}}
+        {
+          "@type": "ListItem",
+          "position": {{ add $index 1 }},
+          "item": {
+            "@type": "{{ if eq $.Section "articles" }}Article{{ else }}SoftwareApplication{{ end }}",
+            "name": "{{ $page.Title }}",
+            "url": "{{ $page.Permalink }}"
+          }
+        }
+      {{- end -}}
+    ]
+  }
+}
+</script>
+{{- end -}}
+

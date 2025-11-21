@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="space-y-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div class="lg:col-span-2 space-y-4">
+      {{ partial "about.html" . }}
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="pixel-box p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-base font-bold pixel-text">PROJECTS</h2>
+            <a href="{{ "projects/" | relURL }}">
+              <button class="pixel-button text-xs">VIEW ALL</button>
+            </a>
+          </div>
+          <p class="text-pixel-text-muted text-xs pixel-text">
+            &gt; Open source projects and contributions
+          </p>
+        </div>
+
+        <div class="pixel-box p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-base font-bold pixel-text">ARTICLES</h2>
+            <a href="{{ "articles/" | relURL }}">
+              <button class="pixel-button text-xs">VIEW ALL</button>
+            </a>
+          </div>
+          <p class="text-pixel-text-muted text-xs pixel-text">
+            &gt; Technical notes and articles
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="space-y-4">
+      {{ partial "profile.html" . }}
+      {{ partial "contact-info.html" . }}
+      {{ partial "social-links.html" . }}
+      {{ partial "services.html" . }}
+    </div>
+  </div>
+</div>
+{{ end }}
+

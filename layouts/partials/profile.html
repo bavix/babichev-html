@@ -1,0 +1,34 @@
+<div class="pixel-box p-4">
+  <div class="flex items-center gap-3 mb-4">
+    <img 
+      src="{{ "assets/svg/logo.svg" | relURL }}" 
+      alt="Logo" 
+      class="w-12 h-12 object-contain"
+      style="image-rendering: pixelated;"
+    />
+    <div>
+      <h2 class="text-base font-bold pixel-text">USER INFO</h2>
+    </div>
+  </div>
+  
+  <div class="space-y-2 text-sm">
+    <div>
+      <div class="text-pixel-text-muted text-xs pixel-text">&gt; LOGIN:</div>
+      <div class="text-pixel-text font-bold text-sm">{{ .Site.Params.login }}</div>
+    </div>
+    <div>
+      <div class="text-pixel-text-muted text-xs pixel-text">&gt; NAME:</div>
+      <div class="text-pixel-text font-bold text-sm">{{ .Site.Params.lastName }} {{ .Site.Params.firstName }} {{ .Site.Params.middleName }}</div>
+    </div>
+    <div class="pt-2 border-t border-pixel-border">
+      <div class="text-pixel-text-muted text-xs pixel-text">&gt; PROFESSION:</div>
+      <div class="text-pixel-text font-bold text-sm">{{ .Site.Params.profession }}</div>
+    </div>
+    <div class="pt-2">
+      <a href="{{ .Site.Params.githubUrl }}" target="_blank" rel="noopener noreferrer" class="pixel-button text-xs inline-block">
+        GITHUB: @{{ .Site.Params.login }}
+      </a>
+    </div>
+  </div>
+</div>
+

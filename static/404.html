@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Not Found - Maxim Babichev - Software Developer</title>
+  <meta name="description" content="Page Not Found">
+  <link rel="icon" type="image/svg+xml" href="/assets/svg/mascot.svg">
+  <link rel="stylesheet" href="/css/main.min.css">
+</head>
+<body class="bg-pixel-bg text-pixel-text font-pixel">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full text-center space-y-8">
+      <div class="space-y-6">
+        <div class="text-9xl sm:text-[12rem] font-bold text-pixel-text pixel-text leading-none" style="text-shadow: 0 0 40px rgba(34, 197, 94, 0.4);">
+          404
+        </div>
+        
+        <div class="space-y-3">
+          <h1 class="text-2xl sm:text-3xl font-bold pixel-text">PAGE NOT FOUND</h1>
+          <p class="text-sm sm:text-base text-pixel-text-muted leading-relaxed max-w-lg mx-auto">
+            Looks like someone took a wrong turn at the digital crossroads. The page went on vacation without leaving a forwarding address!
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <div class="w-40 h-40 sm:w-48 sm:h-48">
+          <img src="/assets/svg/error-404-sega.svg" alt="Lost Traveler" class="w-full h-full opacity-80" style="image-rendering: pixelated;" />
+        </div>
+      </div>
+
+      <div class="text-xs pixel-text text-pixel-text-muted space-y-1 max-w-md mx-auto">
+        <div>&gt; STATUS: <span class="text-pixel-accent">HTTP 404 NOT FOUND</span></div>
+        <div>&gt; PATH: <span class="text-pixel-text" id="error-path">/unknown</span></div>
+        <div>&gt; RESULT: <span class="text-pixel-accent">File not found</span></div>
+      </div>
+
+      <div class="pt-4">
+        <a href="https://babichev.net" class="text-pixel-border-light hover:text-pixel-text text-sm pixel-text underline transition-colors">
+          &lt; Return to home
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('error-path').textContent = window.location.pathname;
+  </script>
+</body>
+</html>
