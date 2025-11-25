@@ -5,21 +5,36 @@ WORKDIR /app
 COPY package*.json tailwind.config.js postcss.config.js ./
 RUN npm ci --only=production=false --no-audit --no-fund
 
-COPY . .
-RUN npm run build:css && \
-    rm -rf node_modules package*.json tailwind.config.js postcss.config.js
+# Copy all files needed for CSS processing
+COPY static ./static/
+COPY layouts ./layouts/
+COPY content ./content/
+
+# Create symlink for node_modules to make CSS imports work
+RUN ln -sf /app/node_modules /app/static/
+
+RUN npm run build:css:prod
 
 FROM klakegg/hugo:ext-alpine AS builder
 
 WORKDIR /app
 
-COPY . .
+# Copy Hugo configuration and content files first
+COPY hugo.toml ./
+COPY content ./content/
+COPY layouts ./layouts/
+
+# Copy static files except CSS (will be copied from css-builder)
+COPY static ./static/
+# Copy the built CSS from the css-builder stage (overwrite the original)
 COPY --from=css-builder /app/static/css/main.min.css ./static/css/main.min.css
 
-RUN hugo --minify && \
-    rm -rf content layouts static hugo.toml && \
-    find /app/public -name "*.css" ! -name "*.min.css" -delete && \
-    find /app/public -name "*.map" -delete
+# Build the site
+RUN hugo --minify
+
+# Clean up unnecessary files from the public directory
+RUN find /app/public -name "*.map" -delete && \
+    find /app/public -name "*.css" ! -name "*.min.css" -delete
 
 FROM rtsp/lighttpd
 

@@ -19,11 +19,23 @@
         if (!theme) {
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           theme = prefersDark ? 'dark' : 'light';
+          localStorage.setItem('babichev-theme', theme);
         }
         
+        // Remove any existing theme classes
         document.documentElement.classList.remove('dark', 'light');
+        // Add the current theme class immediately
         document.documentElement.classList.add(theme);
-      } catch (e) {}
+        
+        // Store in window for debugging
+        window.__theme = theme;
+      } catch (e) {
+        console.error('Theme initialization error:', e);
+        // Fallback to dark theme if localStorage fails
+        document.documentElement.classList.remove('dark', 'light');
+        document.documentElement.classList.add('dark');
+        window.__theme = 'dark';
+      }
     })();
   </script>
 </head>

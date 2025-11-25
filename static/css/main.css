@@ -5,4 +5,4 @@
 @source "../../layouts/**/*.html";
 @source "../../content/**/*.md";
 
-@import '../../node_modules/@bavix/babichev-design/dist/styles/main.css';
+@import '@bavix/babichev-design/styles';
