@@ -10,8 +10,29 @@
   <link rel="manifest" href="{{ "/assets/mobile-icons/manifest.json" | absURL }}">
   <link rel="stylesheet" href="{{ "/css/main.min.css" | absURL }}">
   {{ partial "structured-data.html" . }}
+  
+  <!-- Prevent theme flash -->
+  <script>
+    (function() {
+      try {
+        let theme = localStorage.getItem('babichev-theme');
+        
+        // Если тема не сохранена, определяем системную тему устройства
+        if (!theme) {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          theme = prefersDark ? 'dark' : 'light';
+        }
+        
+        // Применяем светлую тму, если она выбрана
+        if (theme === 'light') {
+          document.documentElement.classList.add('light');
+          document.body.classList.add('light');
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
-<body class="bg-pixel-bg text-pixel-text font-pixel">
+<body class="font-pixel">
   <div class="container mx-auto px-4 py-4 max-w-5xl">
     {{ partial "header.html" . }}
     

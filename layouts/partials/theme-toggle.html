@@ -1,0 +1,128 @@
+<!-- Theme Toggle Button -->
+<button 
+  id="theme-toggle" 
+  class="pixel-button pixel-button-ghost pixel-button-sm"
+  aria-label="Toggle theme"
+  title="Toggle theme"
+>
+  <span class="theme-icon theme-icon-dark" aria-hidden="true">☀️</span>
+  <span class="theme-icon theme-icon-light" aria-hidden="true">🌙</span>
+</button>
+
+<style>
+  /* Скрыть/показать иконки в зависимости от темы */
+  .theme-icon-light {
+    display: none;
+  }
+  
+  .light .theme-icon-dark {
+    display: none;
+  }
+  
+  .light .theme-icon-light {
+    display: inline;
+  }
+</style>
+
+<script>
+  (function() {
+    'use strict';
+    
+    const STORAGE_KEY = 'babichev-theme';
+    const THEME_DARK = 'dark';
+    const THEME_LIGHT = 'light';
+    
+    /**
+     * Получить сохранённую тему из localStorage
+     */
+    function getSavedTheme() {
+      try {
+        return localStorage.getItem(STORAGE_KEY) || THEME_DARK;
+      } catch (e) {
+        return THEME_DARK;
+      }
+    }
+    
+    /**
+     * Сохранить тему в localStorage
+     */
+    function saveTheme(theme) {
+      try {
+        localStorage.setItem(STORAGE_KEY, theme);
+      } catch (e) {
+        console.warn('Failed to save theme to localStorage:', e);
+      }
+    }
+    
+    /**
+     * Получить текущую тему (сохранённую или системную)
+     */
+    function getCurrentTheme() {
+      let theme = getSavedTheme();
+      
+      // Если тема не сохранена, определяем системную
+      if (!theme || !localStorage.getItem(STORAGE_KEY)) {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        theme = prefersDark ? THEME_DARK : THEME_LIGHT;
+      }
+      
+      return theme;
+    }
+    
+    /**
+     * Применить тему к документу
+     */
+    function applyTheme(theme) {
+      const root = document.documentElement;
+      const body = document.body;
+      
+      // Удалить старые классы
+      root.classList.remove(THEME_DARK, THEME_LIGHT);
+      body.classList.remove(THEME_DARK, THEME_LIGHT);
+      
+      // Добавить новые классы
+      if (theme === THEME_LIGHT) {
+        root.classList.add(THEME_LIGHT);
+        body.classList.add(THEME_LIGHT);
+      }
+      
+      // Сохранить выбор
+      saveTheme(theme);
+    }
+    
+    /**
+     * Переключить тему
+     */
+    function toggleTheme() {
+      const currentTheme = document.documentElement.classList.contains(THEME_LIGHT) 
+        ? THEME_LIGHT 
+        : THEME_DARK;
+      
+      const newTheme = currentTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
+      applyTheme(newTheme);
+    }
+    
+    // Применить текущую тему при загрузке страницы
+    const currentTheme = getCurrentTheme();
+    if (currentTheme === THEME_LIGHT) {
+      applyTheme(THEME_LIGHT);
+    }
+    
+    // Добавить обработчик клика на кнопку
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButton = document.getElementById('theme-toggle');
+      if (toggleButton) {
+        toggleButton.addEventListener('click', toggleTheme);
+      }
+      
+      // Слушать изменения системной темы (только если тема не сохранена вручную)
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        // Применять автоматически только если пользователь не выбрал тему вручную
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          const newTheme = e.matches ? THEME_DARK : THEME_LIGHT;
+          applyTheme(newTheme);
+        }
+      });
+    });
+  })();
+</script>

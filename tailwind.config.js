@@ -1,17 +1,29 @@
 export default {
   content: [
-    "./layouts/**/*.html",
-    "./content/**/*.md",
-    "./static/**/*.html",
-    "./hugo.toml",
+    './layouts/**/*.html',
+    './content/**/*.md',
+    './static/**/*.html',
+  ],
+  safelist: [
+    'text-pixel-text',
+    'text-pixel-text-muted',
+    'text-pixel-accent',
+    'pixel-text',
+    'font-pixel',
+    'bg-pixel-bg',
+    'pixel-box',
+    'pixel-button',
+    'pixel-button:hover',
+    'pixel-button-primary',
+    'pixel-button-primary:hover',
+    'pixel-button-ghost',
+    'pixel-button-ghost:hover',
   ],
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
         pixel: {
-          // Цвета для совместимости и поддержки пакета
-          // Все цвета определены в пакете @bavix/babichev-design
           bg: '#000000',
           'bg-dark': '#0a0a0a',
           border: '#22c55e',
@@ -42,7 +54,7 @@ export default {
         pixel: ['Courier New', 'monospace'],
       },
       screens: {
-        'xs': '475px',
+        'sm': '640px',
       },
     },
   },
