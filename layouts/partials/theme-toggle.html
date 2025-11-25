@@ -13,11 +13,11 @@
     display: none;
   }
   
-  .light .theme-icon-dark {
+  html.light .theme-icon-dark {
     display: none;
   }
   
-  .light .theme-icon-light {
+  html.light .theme-icon-light {
     display: inline;
   }
 </style>
@@ -30,63 +30,37 @@
     const THEME_DARK = 'dark';
     const THEME_LIGHT = 'light';
     
-    function getSavedTheme() {
-      try {
-        return localStorage.getItem(STORAGE_KEY) || THEME_DARK;
-      } catch (e) {
-        return THEME_DARK;
-      }
-    }
-    
-    function saveTheme(theme) {
-      try {
-        localStorage.setItem(STORAGE_KEY, theme);
-      } catch (e) {
-        console.warn('Failed to save theme to localStorage:', e);
-      }
-    }
-    
-    function getCurrentTheme() {
-      let theme = getSavedTheme();
-      
-      if (!theme || !localStorage.getItem(STORAGE_KEY)) {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        theme = prefersDark ? THEME_DARK : THEME_LIGHT;
-      }
-      
-      return theme;
-    }
-    
-    function applyTheme(theme) {
+    function toggleTheme() {
       const root = document.documentElement;
+      const currentTheme = root.classList.contains(THEME_LIGHT) ? THEME_LIGHT : THEME_DARK;
+      const newTheme = currentTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
+      
+      console.log('[Theme] Toggling from', currentTheme, 'to', newTheme);
       
       root.classList.remove(THEME_DARK, THEME_LIGHT);
-      root.classList.add(theme);
+      root.classList.add(newTheme);
       
-      saveTheme(theme);
-    }
-    
-    function toggleTheme() {
-      const currentTheme = document.documentElement.classList.contains(THEME_LIGHT) 
-        ? THEME_LIGHT 
-        : THEME_DARK;
+      try {
+        localStorage.setItem(STORAGE_KEY, newTheme);
+      } catch (e) {
+        console.warn('Failed to save theme:', e);
+      }
       
-      const newTheme = currentTheme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
-      applyTheme(newTheme);
+      window.__theme = newTheme;
     }
     
     document.addEventListener('DOMContentLoaded', function() {
       const toggleButton = document.getElementById('theme-toggle');
       if (toggleButton) {
-        toggleButton.addEventListener('click', toggleTheme);
+        console.log('[Theme] Toggle button found, attaching click listener');
+        toggleButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          console.log('[Theme] Toggle button clicked');
+          toggleTheme();
+        });
+      } else {
+        console.warn('[Theme] Toggle button not found');
       }
-      
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-        if (!localStorage.getItem(STORAGE_KEY)) {
-          const newTheme = e.matches ? THEME_DARK : THEME_LIGHT;
-          applyTheme(newTheme);
-        }
-      });
     });
   })();
 </script>

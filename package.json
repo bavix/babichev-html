@@ -10,14 +10,14 @@
     "clean": "rm -rf public/* public/.* 2>/dev/null || true",
     "serve": "hugo server"
   },
-  "dependencies": {
-    "@bavix/babichev-design": "^1.0.5"
-  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "autoprefixer": "^10.4.22",
     "cssnano": "^7.1.2",
     "postcss": "^8.4.32",
     "postcss-cli": "^11.0.1"
+  },
+  "dependencies": {
+    "@bavix/babichev-design": "^1.0.15"
   }
 }
