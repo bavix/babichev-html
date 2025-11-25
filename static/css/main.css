@@ -2,9 +2,7 @@
 
 @config "../../tailwind.config.js";
 
-/* Scan HTML files for Tailwind classes */
 @source "../../layouts/**/*.html";
 @source "../../content/**/*.md";
 
-/* Import design system styles */
 @import '../../node_modules/@bavix/babichev-design/dist/styles/main.css';

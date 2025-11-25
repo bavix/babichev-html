@@ -11,23 +11,18 @@
   <link rel="stylesheet" href="{{ "/css/main.min.css" | absURL }}">
   {{ partial "structured-data.html" . }}
   
-  <!-- Prevent theme flash -->
   <script>
     (function() {
       try {
         let theme = localStorage.getItem('babichev-theme');
         
-        // Если тема не сохранена, определяем системную тему устройства
         if (!theme) {
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           theme = prefersDark ? 'dark' : 'light';
         }
         
-        // Применяем светлую тму, если она выбрана
-        if (theme === 'light') {
-          document.documentElement.classList.add('light');
-          document.body.classList.add('light');
-        }
+        document.documentElement.classList.remove('dark', 'light');
+        document.documentElement.classList.add(theme);
       } catch (e) {}
     })();
   </script>

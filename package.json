@@ -11,7 +11,7 @@
     "serve": "hugo server"
   },
   "dependencies": {
-    "@bavix/babichev-design": "^1.0.3"
+    "@bavix/babichev-design": "^1.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
