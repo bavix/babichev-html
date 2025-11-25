@@ -6,8 +6,7 @@ COPY package*.json tailwind.config.js postcss.config.js ./
 RUN npm ci --only=production=false --no-audit --no-fund
 
 COPY . .
-RUN npm run build:css && \
-    rm -rf node_modules package*.json tailwind.config.js postcss.config.js
+RUN npm run build:css:prod
 
 FROM klakegg/hugo:ext-alpine AS builder
 
