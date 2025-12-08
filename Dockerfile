@@ -36,12 +36,24 @@ RUN hugo --minify
 RUN find /app/public -name "*.map" -delete && \
     find /app/public -name "*.css" ! -name "*.min.css" -delete
 
-FROM rtsp/lighttpd
+FROM golang:1.25-alpine AS go-builder
 
-RUN mkdir -p /var/log/lighttpd /var/cache/lighttpd/uploads /var/cache/lighttpd/compress && \
-    chmod -R 755 /var/cache/lighttpd
+WORKDIR /app
 
-COPY lighttpd.conf /etc/lighttpd/lighttpd.conf
-COPY --from=builder /app/public /var/www/html/
+RUN apk add --no-cache upx
 
+COPY go.mod go.sum ./
+COPY --from=builder /app/public ./public
+COPY main.go ./
+
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o server .
+RUN upx --best --lzma /app/server
+
+FROM scratch
+
+COPY --from=go-builder /app/server /server
+
+ENV PORT=80
 EXPOSE 80/tcp
+
+ENTRYPOINT ["/server"]
